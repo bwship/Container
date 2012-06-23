@@ -32,8 +32,8 @@ namespace Container.Controllers
         public ActionResult ContainerProcessor()
         {
             containerProcessor containerProcessor = new containerProcessor();
-            
-            return View();
+
+            return View(containerProcessor);
         }
 
         [HttpPost]
