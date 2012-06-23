@@ -1,4 +1,5 @@
-﻿@model Container.Models.containerProcessor
+﻿@using Container.Models
+@model Container.Models.containerProcessor
 
 @{
     ViewBag.Title = "Container Processor";
@@ -17,4 +18,12 @@
  
         @Items.ItemSave("", "Submit", "modal-button modal-save-button") 
    }
+
+    @if (Model != null && Model.containerSteps != null)
+    {
+        foreach (containerStep containerStep in Model.containerSteps)
+        {
+            <div>@containerStep.step - @containerStep.stepDescription</div>
+        }
+    }
 </div>                

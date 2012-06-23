@@ -9,8 +9,20 @@ namespace Container.Controllers
 {
     public class ContainerController : Controller
     {
-        //
-        // GET: /Container/
+        #region Variables
+        
+        containerProvider _containerProvider;
+
+        #endregion
+
+        #region Contructors
+
+        public ContainerController()
+        {
+            _containerProvider = new containerProvider();
+        }
+
+        #endregion
 
         public ActionResult Index()
         {
@@ -19,12 +31,18 @@ namespace Container.Controllers
 
         public ActionResult ContainerProcessor()
         {
+            containerProcessor containerProcessor = new containerProcessor();
+            
             return View();
         }
 
         [HttpPost]
         public ActionResult ContainerProcessor(containerProcessor containerProcessor)
         {
+            if (_containerProvider.IsValid(ref containerProcessor))
+            {
+                _containerProvider.calculateContainer(ref containerProcessor);
+            }
 
             return View(containerProcessor);
         }

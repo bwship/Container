@@ -115,6 +115,8 @@
     <Compile Include="Models\container.cs" />
     <Compile Include="Models\containerProcessor.cs" />
     <Compile Include="Models\containerProvider.cs" />
+    <Compile Include="Models\containerStep.cs" />
+    <Compile Include="Models\containerStepDescriptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

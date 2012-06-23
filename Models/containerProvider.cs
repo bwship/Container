@@ -9,71 +9,96 @@ namespace Container.Models
     {
         public bool calculateContainer(ref containerProcessor cp)
         {
-            cp.containerSteps = new List<containerStep>();
-
-            //if gallons are 0, then there are no steps required
-            if (cp.gallonsToFind == 0)
-            {
-                cp.containerSteps.Add(addStep(cp, containerStepDescriptions.GALLONS_TO_FIND_EQUALS_ZERO));
-                return false;
-            }
-
-            //check that the container and gallons is valid
-            if (IsValid(ref cp))
+            //the first step should be to fill the container that is closer to the number of gallons to find
+            if (Math.Abs(cp.gallonsToFind - cp.container1.capacity) <= Math.Abs(cp.gallonsToFind - cp.container2.capacity))
             {
                 //fill the first container
                 cp.container1.fill();
                 cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_FILL));
+            }
+            else
+            {
+                //fill the second container
+                cp.container2.fill();
+                cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_FILL));
+            }
 
-                while (true)
+            while (true)
+            {
+                if (cp.container1.isFull())
                 {
-                    if (cp.container1.isFull() && cp.container2.isEmpty())
+                    if (cp.container2.isEmpty())
                     {
-                        //container 1 is full and container 2 is empty then transfer
                         cp.container1.transfer(ref cp.container2);
                         cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_TRANSFER_TO_CONTAINER_2));
                     }
-                    else if (cp.container2.isFull() && cp.container1.isEmpty())
+                    else
                     {
-                        //if the container 2 is full and container 1 is empty, then transfer
+                        //if container 2 would become filled, then dump it, otherwise transfer it
+                        if (cp.container1.gallons + cp.container2.gallons >= cp.container2.capacity)
+                        {
+                            cp.container1.dump();
+                            cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_DUMP));
+                        }
+                        else
+                        {
+                            cp.container1.transfer(ref cp.container2);
+                            cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_TRANSFER_TO_CONTAINER_2));
+                        }
+                    }
+                }
+                else if (cp.container2.isFull())
+                {
+                    if (cp.container1.isEmpty())
+                    {
                         cp.container2.transfer(ref cp.container1);
                         cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_TRANSFER_TO_CONTAINER_1));
                     }
                     else
                     {
-                        if (cp.container1.isFull() && !cp.container2.isEmpty())
+                        //if container 1 would become filled, then dump it, otherwise transfer it
+                        if (cp.container1.gallons + cp.container2.gallons >= cp.container1.capacity)
                         {
-                            //container 1 is full and container 2 is not empty, so dump container 1
-                            cp.container1.dump();
-                            cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_DUMP));
-                        }
-                        else if (cp.container2.isFull() && !cp.container1.isEmpty())
-                        {
-                            //container 2 is full and contianer 1 is not empty, so dump container 2
                             cp.container2.dump();
                             cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_DUMP));
                         }
+                        else
+                        {
+                            cp.container2.transfer(ref cp.container1);
+                            cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_TRANSFER_TO_CONTAINER_1));
+                        }
                     }
 
-                    if (cp.container1.gallons == cp.gallonsToFind)
-                    {
-                        cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_FOUND));
-                        return true;
-                    }
-                    else if (cp.container2.gallons == cp.gallonsToFind)
-                    {
-                        cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_FOUND));
-                        return true;
-                    }
+                }
+                else if (cp.container1.isEmpty())
+                {
+                    cp.container1.fill();
+                    cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_FILL));
+                }
+                else if (cp.container2.isEmpty())
+                {
+                    cp.container2.fill();
+                    cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_FILL));
+                }
+
+                if (cp.container1.gallons == cp.gallonsToFind)
+                {
+                    cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_FOUND));
+                    return true;
+                }
+                else if (cp.container2.gallons == cp.gallonsToFind)
+                {
+                    cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_FOUND));
+                    return true;
                 }
             }
         }
 
-        private bool IsValid(ref containerProcessor cp)
+        public bool IsValid(ref containerProcessor cp)
         {
             bool isValid = true;
 
-                        //check that gallons to find is less than or equal to container 1 plus container 2's capacity
+            //check that gallons to find is less than or equal to container 1 plus container 2's capacity
             if (cp.gallonsToFind > cp.container1.capacity + cp.container2.capacity)
             {
                 cp.containerSteps.Add(addStep(cp, containerStepDescriptions.ERROR_GALLONS_TO_FIND_MUST_BE_LESS_THAN_OR_EQUAL_TO_CONTAINER_1_PLUS_CONTAINER_2));
@@ -99,7 +124,7 @@ namespace Container.Models
         {
             return new containerStep
                         {
-                            step = (cp.containerSteps == null) ? 0 : cp.containerSteps.Max(m => m.step) + 1,
+                            step = (cp.containerSteps == null || cp.containerSteps.Count == 0) ? 1 : cp.containerSteps.Max(m => m.step) + 1,
                             stepDescription = message
                         };
         }

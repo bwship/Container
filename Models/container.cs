@@ -17,9 +17,14 @@ namespace Container.Models
     {
         #region Constuctors
 
+        public container()
+        {
+            this.capacity = 0;
+            this.gallons = 0;
+        }
+
         public container(int capacity)
         {
-            //the container is always empty initi
             this.capacity = capacity;
             this.gallons = 0;
         }

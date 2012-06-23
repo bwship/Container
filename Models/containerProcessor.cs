@@ -8,6 +8,13 @@ namespace Container.Models
 {
     public class containerProcessor
     {
+        public containerProcessor()
+        {
+            this.container1 = new container();
+            this.container2 = new container();
+            this.containerSteps = new List<containerStep>();
+        }
+
         public container container1;
 
         public container container2;
