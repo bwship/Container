@@ -39,6 +39,10 @@ namespace Container.Controllers
         [HttpPost]
         public ActionResult ContainerProcessor(containerProcessor containerProcessor)
         {
+            containerProcessor.container1.capacity = 1;
+            containerProcessor.container2.capacity = 10;
+            containerProcessor.gallonsToFind = 4;
+
             if (_containerProvider.IsValid(ref containerProcessor))
             {
                 _containerProvider.calculateContainer(ref containerProcessor);

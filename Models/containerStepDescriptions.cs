@@ -9,22 +9,24 @@ namespace Container.Models
     {
         //Error or Warning Messages
         internal const string GALLONS_TO_FIND_EQUALS_ZERO = "Gallons to find is set to zero.  No steps required.";
-        internal const string ERROR_GALLONS_TO_FIND_MUST_BE_LESS_THAN_OR_EQUAL_TO_CONTAINER_1_PLUS_CONTAINER_2 = "Gallons to find must be less than or equal to Container 1 plus Container 2";
-        internal const string ERROR_CONTAINER_1_AND_CONTAINER_2_MUST_BE_DIFFERENT = "Container and Container 2 must be different";
-        internal const string ERROR_CONTAINER_1_AND_CONTAINER_2_SHARE_PRIMES = "Container 1 and Container 2 can not share prime numbers";
+        internal const string ERROR_GALLONS_TO_FIND_MUST_BE_LESS_THAN_OR_EQUAL_TO_CONTAINER_1_PLUS_CONTAINER_2 = "Gallons to find must be less than or equal to first container plus second container";
+        internal const string ERROR_CONTAINER_1_AND_CONTAINER_2_MUST_BE_DIFFERENT = "First container and second container must be different";
+        internal const string ERROR_CONTAINER_1_AND_CONTAINER_2_SHARE_PRIMES = "First container and second container can not share prime numbers";
 
-        
+        //Initial Message
+        internal const string INITIAL_STEP = "Initial step, both containers are empty";
+
         //Fill, Dump, Transfer Messages
-        internal const string CONTAINER_1_FILL = "Filled Container 1";
-        internal const string CONTAINER_1_DUMP = "Dumped Container 1";
-        internal const string CONTAINER_1_TRANSFER_TO_CONTAINER_2 = "Transferred Container 1 to Container 2";
+        internal const string CONTAINER_1_FILL = "Filled first container";
+        internal const string CONTAINER_1_DUMP = "Dumped first container";
+        internal const string CONTAINER_1_TRANSFER_TO_CONTAINER_2 = "Transferred first container to second container";
 
-        internal const string CONTAINER_2_FILL = "Filled Container 2";
-        internal const string CONTAINER_2_DUMP = "Dumped Container 2";
-        internal const string CONTAINER_2_TRANSFER_TO_CONTAINER_1 = "Transferred Container 2 to Container 1";
+        internal const string CONTAINER_2_FILL = "Filled second container";
+        internal const string CONTAINER_2_DUMP = "Dumped second container";
+        internal const string CONTAINER_2_TRANSFER_TO_CONTAINER_1 = "Transferred second container to first container";
 
         //Found Messages
-        internal const string CONTAINER_1_FOUND = "Container 1 has the correct number of gallons.";
-        internal const string CONTAINER_2_FOUND = "Container 2 has the correct number of gallons.";
+        internal const string CONTAINER_1_FOUND = "First container has the correct number of gallons.";
+        internal const string CONTAINER_2_FOUND = "Second container has the correct number of gallons.";
     }
 }

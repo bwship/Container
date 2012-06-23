@@ -9,8 +9,28 @@ namespace Container.Models
     {
         public bool calculateContainer(ref containerProcessor cp)
         {
-            //the first step should be to fill the container that is closer to the number of gallons to find
-            if (Math.Abs(cp.gallonsToFind - cp.container1.capacity) <= Math.Abs(cp.gallonsToFind - cp.container2.capacity))
+            cp.containerSteps.Add(addStep(cp, containerStepDescriptions.INITIAL_STEP));
+
+            //Step 1 - Decide which container to fill first
+            bool fillFirstContainer = false;
+
+            if (cp.gallonsToFind > cp.container1.capacity && cp.gallonsToFind > cp.container2.capacity)
+            {
+                if (cp.container1.capacity > cp.container2.capacity)
+                {
+                    fillFirstContainer = true;
+                }
+            }
+            else
+            {
+                //the first step should be to fill the container that is closer to the number of gallons to find
+                if (Math.Abs(cp.gallonsToFind - cp.container1.capacity) <= Math.Abs(cp.gallonsToFind - cp.container2.capacity))
+                {
+                    fillFirstContainer = true;
+                }
+            }
+
+            if (fillFirstContainer)
             {
                 //fill the first container
                 cp.container1.fill();
@@ -23,6 +43,7 @@ namespace Container.Models
                 cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_FILL));
             }
 
+            //Step 2 - loop through and continue to fill, dump, and transfer until the value is found 
             while (true)
             {
                 if (cp.container1.isFull())
@@ -81,6 +102,7 @@ namespace Container.Models
                     cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_FILL));
                 }
 
+                //Step 3 - check if the value is found
                 if (cp.container1.gallons == cp.gallonsToFind)
                 {
                     cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_FOUND));
@@ -124,8 +146,8 @@ namespace Container.Models
         {
             return new containerStep
                         {
-                            step = (cp.containerSteps == null || cp.containerSteps.Count == 0) ? 1 : cp.containerSteps.Max(m => m.step) + 1,
-                            stepDescription = message
+                            step = (cp.containerSteps == null || cp.containerSteps.Count == 0) ? 0 : cp.containerSteps.Max(m => m.step) + 1,
+                            stepDescription = String.Format("{0} <br /> Container 1 - {1} <br /> Container 2 - {2}", message, cp.container1.gallons.ToString(), cp.container2.gallons.ToString())
                         };
         }
 

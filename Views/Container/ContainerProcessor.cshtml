@@ -1,5 +1,5 @@
 ﻿@using Container.Models
-@model Container.Models.containerProcessor
+@model containerProcessor
 
 @{
     ViewBag.Title = "Container Processor";
@@ -23,7 +23,7 @@
     {
         foreach (containerStep containerStep in Model.containerSteps)
         {
-            <div>@containerStep.step - @containerStep.stepDescription</div>
+            <div>Step @containerStep.step - @containerStep.stepDescription</div>
         }
     }
 </div>                
