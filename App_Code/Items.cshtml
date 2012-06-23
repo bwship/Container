@@ -1,0 +1,61 @@
+@using System.Web.Mvc
+
+@functions
+{
+     private static HtmlHelper<object> Html = (CurrentPage as WebViewPage).Html;
+}
+
+@helper Item(MvcHtmlString error, MvcHtmlString title, MvcHtmlString input)
+{
+    <div class="item">
+        <div class="item-error">
+            @error                
+        </div>
+        <div class="clear-divs"></div>
+        <div class="item-title">
+            @title
+        </div>
+        <div class="item-input">
+            @input
+        </div> 
+    </div>
+    <div class="clear-divs"></div>   
+}    
+
+@helper ItemSave(string id, string title, string cssColorClass)
+{
+    <div class="item" style="margin-top: 20px">
+        <div class="right">            
+            <button id="@id" type="submit" class="@cssColorClass">@title</button>
+        </div>
+        <div class="clear-divs"></div>        
+    </div>
+    <div class="clear-divs"></div>      
+}
+
+@helper ItemHeader(MvcHtmlString title, MvcHtmlString input)
+{
+    <div class="item">                
+        <div class="item-title @(input == null ? "item-title-full" : "")">
+            <h1 class="red">@title</h1>
+        </div>       
+        @if(input != null)
+        {
+            <div class="item-input">
+                @input
+            </div>
+        }
+    </div>
+    <div class="clear-divs"></div>    
+}
+
+@helper ItemValidationSummary(MvcHtmlString validationSummary)
+    {
+    <div class="item">
+        <div class="item-error">
+            @validationSummary            
+        </div>
+        <div class="clear-divs"></div>
+    </div>
+    <div class="clear-divs"></div> 
+}
