@@ -3,7 +3,6 @@
 
 @{
     ViewBag.Title = "Container Processor";
-    Layout = "~/Views/Shared/Master.cshtml";
 }
 
 <div class="content-body"> 
@@ -71,18 +70,32 @@
     }
 </div>                
 
-<div class="sidebar">
+@section Sidebar { 
     <div class="sidebar-content">
-    <div class="sidebar-content-header">Resources</div>
-    <div class="sidebar-menu">
-        <ul class="ulSidebarMenu">            
-            <li><a class="bold" href="https://github.com/bwship/Container" target="_blank">Source Code</a></li>
-            <li><a class="bold" href="http://www.youtube.com/watch?v=qtg9pSJsRSg" target="_blank">Video Explanation</a></li>
-            <li><a class="bold" href="http://www.wikihow.com/Solve-the-Water-Jug-Riddle-from-Die-Hard-3" target="_blank">wikiHow</a></li>
-            <li><a class="bold" href="http://en.wikipedia.org/wiki/Coprime" target="_blank">What's a Coprime</a></li>        
-        </ul>
+        <div class="sidebar-content-header">My Resources</div>
+        <div class="sidebar-menu">
+            <ul class="ulSidebarMenu">            
+                <li><a class="bold" href="http://www.wallmobilesolutions.com/index.php/2012/06/die-hard-water-jug-puzzle/" target="_blank">Blog Post</a></li>              
+                <li><a class="bold" href="https://github.com/bwship/Container" target="_blank">GitHub Source</a></li>                
+            </ul>
+        </div>
+        <div class="clear-divs"></div>    
     </div>
     <div class="clear-divs"></div>    
-</div>
-<div class="clear-divs"></div>    
-</div>
+
+    <div class="sidebar-content">
+        <div class="sidebar-content-header">Other Resources</div>
+        <div class="sidebar-menu">
+            <ul class="ulSidebarMenu">                                                    
+                <li><a class="bold" href="http://stackoverflow.com/questions/1806880/water-jug-problem-in-die-hard-3-into-a-graph" target="_blank">stackoverflow</a></li>
+                <li><a class="bold" href="http://www.wikihow.com/Solve-the-Water-Jug-Riddle-from-Die-Hard-3" target="_blank">wikiHow</a></li>
+                <li><a class="bold" href="http://en.wikipedia.org/wiki/Coprime" target="_blank">wikiPedia - Coprime</a></li>      
+                <li><a class="bold" href="http://www.youtube.com/watch?v=qtg9pSJsRSg" target="_blank">YouTube</a></li>                                                                  
+            </ul>
+        </div>
+        <div class="clear-divs"></div>    
+    </div>
+    <div class="clear-divs"></div>    
+}
+
+

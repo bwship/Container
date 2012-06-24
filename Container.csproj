@@ -110,12 +110,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Container\container.cs" />
-    <Compile Include="ViewModels\Container\containerProcessor.cs" />
-    <Compile Include="ViewModels\containerProvider.cs" />
     <Compile Include="Models\Container\containerStep.cs" />
     <Compile Include="Models\Container\containerStepDescriptions.cs" />
     <Compile Include="Models\Container\containerSummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\containerProvider.cs" />
+    <Compile Include="ViewModels\Container\containerProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -124,6 +124,7 @@
     <Content Include="Content\Images\buttons.png" />
     <Content Include="Content\Images\header-fade.png" />
     <Content Include="Global.asax" />
+    <None Include="README" />
     <Content Include="robots.txt" />
     <Content Include="ViewScripts\Container\ContainerProcessor.js" />
     <Content Include="Web.config" />
@@ -134,12 +135,13 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Container\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\Master.cshtml" />
+    <Content Include="Views\Shared\_LayoutMain.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Container\ContainerProcessor.cshtml" />
