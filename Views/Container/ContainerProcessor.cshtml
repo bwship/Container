@@ -1,11 +1,10 @@
-﻿@using Container.Models.Container
+﻿@using Container.ViewModels.Container
 @model containerProcessor
 
 @{
     ViewBag.Title = "Container Processor";
     Layout = "~/Views/Shared/Master.cshtml";
 }
-
 
 <div class="content-body"> 
     @Content.ContentHeader(MvcHtmlString.Create("Die Hard Container Processor"), null, null)
@@ -22,7 +21,13 @@
             }
         </div>
         <div class="content-column-2">
-            <p>The Container Processor will attempt to find the exact number of gallons of water for you.  Set the first container's gallons, the second container's gallons, and the gallons to find.</p>
+            <p>The Container Processor will attempt to find the exact number of gallons of water for you.  
+            <p><b>How to do it</b></p>
+            <ol>
+                <li>Set how many gallons the first container can hold</li>
+                <li>Set how many gallons the second container can hold</li>
+                <li>Set how many gallons you would liek to end up with</li>
+            </ol>
             <p><b>Rules</b></p>
             <ul>
                 <li>One container must be larger than the other container</li>
@@ -31,7 +36,7 @@
             </ul>
         </div>
     </div>
-    
+   
     @if (Model != null && Model.containerSteps != null && Model.containerSteps.Count > 0)
     {            
         <div class="content-results">

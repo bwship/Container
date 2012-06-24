@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Container.Models.Container
+namespace Container.ViewModels.Container
 {
     public enum containerStepType
     {

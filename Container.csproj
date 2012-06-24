@@ -110,12 +110,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Container\container.cs" />
-    <Compile Include="Models\Container\containerProcessor.cs" />
-    <Compile Include="Models\containerProvider.cs" />
+    <Compile Include="ViewModels\Container\containerProcessor.cs" />
+    <Compile Include="ViewModels\containerProvider.cs" />
     <Compile Include="Models\Container\containerStep.cs" />
     <Compile Include="Models\Container\containerStepDescriptions.cs" />
     <Compile Include="Models\Container\containerSummary.cs" />
-    <Compile Include="Models\test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +125,7 @@
     <Content Include="Content\Images\header-fade.png" />
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
+    <Content Include="ViewScripts\Container\ContainerProcessor.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
