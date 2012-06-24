@@ -103,7 +103,6 @@ namespace Container.ViewModels
             }
             else
             {
-
                 fillFirstContainer = (cp.container1.capacity % cp.gallonsToFind == 0) ? true : false;
             }
 

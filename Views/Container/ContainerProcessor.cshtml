@@ -16,7 +16,7 @@
                 @Items.Item(@Html.ValidationMessageFor(m => m.container2.capacity), @MvcHtmlString.Create("Container 2"), @Html.TextBoxFor(m => m.container2.capacity, new { @placeholder = "Enter a number greater than 0", @name = "container2Capacity" }))
                 @Items.Item(@Html.ValidationMessageFor(m => m.gallonsToFind), @Html.LabelFor(m => m.gallonsToFind), @Html.TextBoxFor(m => m.gallonsToFind, new { @placeholder = "Enter a number greater than 0" }))                
  
-                @Items.ItemSave("", "Submit", "button-120 button-120-grey") 
+                @Items.ItemSave("btnSubmit", "Submit", "button-120 button-120-grey") 
             }
         </div>
         <div class="content-column-2">
@@ -25,7 +25,7 @@
             <ol>
                 <li>Set how many gallons the first container can hold</li>
                 <li>Set how many gallons the second container can hold</li>
-                <li>Set how many gallons you would liek to end up with</li>
+                <li>Set how many gallons you would like to end up with</li>
             </ol>
             <p><b>Rules</b></p>
             <ul>
@@ -68,7 +68,7 @@
             </div>
         </div>
     }
-</div>                
+</div>
 
 @section Sidebar { 
     <div class="sidebar-content">
@@ -98,4 +98,6 @@
     <div class="clear-divs"></div>    
 }
 
-
+@section Javascript {
+    <script src="@Url.Content("~/ViewScripts/Container/ContainerProcessor.js")" type="text/javascript"></script>
+}
