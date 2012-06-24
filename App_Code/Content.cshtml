@@ -1,0 +1,23 @@
+@using System.Web.Mvc
+
+@functions
+{
+     private static HtmlHelper<object> Html = (CurrentPage as WebViewPage).Html;
+}
+
+@helper ContentHeader(MvcHtmlString title = null, MvcHtmlString links = null, string headerImageClass = null)
+{
+    <div class="content-header">
+        <div class="content-header-image">
+            @(headerImageClass != null ? MvcHtmlString.Create(String.Format("<div class='{0}'></div>", @headerImageClass)) : MvcHtmlString.Create("&nbsp"))
+        </div>
+        <div class="content-header-title">
+            @(title != null ? title : MvcHtmlString.Create("&nbsp"))
+        </div>
+        <div class="content-header-links">
+            @(links!= null ? links: MvcHtmlString.Create("&nbsp"))
+        </div>
+        <div class="clear-divs"></div>
+    </div>
+    <div class="clear-divs"></div>    
+}    

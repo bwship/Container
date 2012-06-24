@@ -1,0 +1,31 @@
+@using System.Web.Mvc
+
+@functions
+{
+     private static HtmlHelper<object> Html = (CurrentPage as WebViewPage).Html;
+}
+
+@helper ContainerHeader(MvcHtmlString title = null)
+{
+    <div class="container-header">
+        <div class="container-header-left">
+            @(title != null ? title : MvcHtmlString.Create("&nbsp"))
+        </div>
+        <div class="clear-divs"></div>
+    </div>
+    <div class="clear-divs"></div>
+}    
+
+@helper ContainerItem(MvcHtmlString label = null, MvcHtmlString description = null)
+{
+    <div class="container-item-many container-hover">
+        <div class="container-item-label">
+            @(label != null ? label : MvcHtmlString.Create("&nbsp"))
+        </div>
+        <div class="container-item-description">
+            @(description != null ? description : MvcHtmlString.Create("&nbsp"))
+        </div>                    
+        <div class="clear-divs"></div>
+    </div>
+    <div class="clear-divs"></div>
+}

@@ -1,4 +1,4 @@
-﻿@using Container.Models
+﻿@using Container.Models.Container
 @model containerProcessor
 
 @{
@@ -8,22 +8,76 @@
 
 
 <div class="content-body"> 
-    <h2>Container Processor</h2>
+    @Content.ContentHeader(MvcHtmlString.Create("Die Hard Container Processor"), null, null)
 
-    @using (Html.BeginForm())
-    {
-        @Items.Item(@Html.ValidationMessageFor(m => m.container1.capacity), @Html.LabelFor(m => m.container1.capacity), @Html.TextBoxFor(m => m.container1.capacity, new { @placeholder = "Enter a number greater than 0" }))                
-        @Items.Item(@Html.ValidationMessageFor(m => m.container2.capacity), @Html.LabelFor(m => m.container2.capacity), @Html.TextBoxFor(m => m.container2.capacity, new { @placeholder = "Enter a number greater than 0" }))                
-        @Items.Item(@Html.ValidationMessageFor(m => m.gallonsToFind), @Html.LabelFor(m => m.gallonsToFind), @Html.TextBoxFor(m => m.gallonsToFind, new { @placeholder = "Enter a number greater than 0" }))                
+    <div class="container-body">
+        <div class="content-column-1"> 
+            @using (Html.BeginForm())            
+            {
+                @Items.Item(@Html.ValidationMessageFor(m => m.container1.capacity), @MvcHtmlString.Create("Container 1"), @Html.TextBoxFor(m => m.container1.capacity, new { @placeholder = "Enter a number greater than 0", @name = "container1Capacity" }))                
+                @Items.Item(@Html.ValidationMessageFor(m => m.container2.capacity), @MvcHtmlString.Create("Container 2"), @Html.TextBoxFor(m => m.container2.capacity, new { @placeholder = "Enter a number greater than 0", @name = "container2Capacity" }))
+                @Items.Item(@Html.ValidationMessageFor(m => m.gallonsToFind), @Html.LabelFor(m => m.gallonsToFind), @Html.TextBoxFor(m => m.gallonsToFind, new { @placeholder = "Enter a number greater than 0" }))                
  
-        @Items.ItemSave("", "Submit", "modal-button modal-save-button") 
-   }
+                @Items.ItemSave("", "Submit", "button-120 button-120-grey") 
+            }
+        </div>
+        <div class="content-column-2">
+            <p>The Container Processor will attempt to find the exact number of gallons of water for you.  Set the first container's gallons, the second container's gallons, and the gallons to find.</p>
+            <p><b>Rules</b></p>
+            <ul>
+                <li>One container must be larger than the other container</li>
+                <li>The 'gallons to find' must be less than or equal to the sum of container 1 and container 2</li>
+                <li>Container 1 and 2 must be co-primes. (They must not share any prime numbers except for 1.</li>
+            </ul>
+        </div>
+    </div>
+    
+    @if (Model != null && Model.containerSteps != null && Model.containerSteps.Count > 0)
+    {            
+        <div class="content-results">
+            @Containers.ContainerHeader(MvcHtmlString.Create("Result Summary"))
+            <div class="container-body-many">
+                @Containers.ContainerItem(MvcHtmlString.Create("Status"),
+                                            MvcHtmlString.Create((Model.containerSummary.success ? "Success" : "Failed")))
 
-    @if (Model != null && Model.containerSteps != null)
-    {
-        foreach (containerStep containerStep in Model.containerSteps)
-        {
-            <div>Step @containerStep.step - @containerStep.stepDescription</div>
-        }
+                @Containers.ContainerItem(MvcHtmlString.Create("Steps"),
+                                            MvcHtmlString.Create(@String.Format("{0:###,##0}", Model.containerSummary.steps)))
+            </div>
+        </div>
+        
+        <div class="content-results">
+            @Containers.ContainerHeader(MvcHtmlString.Create("Results Step by Step"))
+            <div class="container-body-many">        
+                @foreach (containerStep containerStep in Model.containerSteps)
+                {
+                    if (containerStep.containerStepType == containerStepType.step)
+                    {                                                                
+                            @Containers.ContainerItem(MvcHtmlString.Create(String.Format("Step {0}", @containerStep.step)),
+                                                        MvcHtmlString.Create(String.Format("{0} <br /> Container 1: {1} <br /> Container 2: {2}", @containerStep.stepDescription, @containerStep.container1Count, @containerStep.container2Count)))
+                    }
+                    else
+                    {
+                            @Containers.ContainerItem(null,
+                                                        MvcHtmlString.Create(String.Format("<b>{0}</b> <br /> Container 1: {1} <br /> Container 2: {2}", @containerStep.stepDescription, @containerStep.container1Count, @containerStep.container2Count)))
+                    }
+                }                    
+            </div>
+        </div>
     }
 </div>                
+
+<div class="sidebar">
+    <div class="sidebar-content">
+    <div class="sidebar-content-header">Resources</div>
+    <div class="sidebar-menu">
+        <ul class="ulSidebarMenu">            
+            <li><a class="bold" href="https://github.com/bwship/Container" target="_blank">Source Code</a></li>
+            <li><a class="bold" href="http://www.youtube.com/watch?v=qtg9pSJsRSg" target="_blank">Video Explanation</a></li>
+            <li><a class="bold" href="http://www.wikihow.com/Solve-the-Water-Jug-Riddle-from-Die-Hard-3" target="_blank">wikiHow</a></li>
+            <li><a class="bold" href="http://en.wikipedia.org/wiki/Coprime" target="_blank">What's a Coprime</a></li>        
+        </ul>
+    </div>
+    <div class="clear-divs"></div>    
+</div>
+<div class="clear-divs"></div>    
+</div>

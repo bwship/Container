@@ -61,9 +61,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.1\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Net.Http.2.0.20505.0\lib\net40\System.Net.Http.dll</HintPath>
@@ -112,17 +109,21 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\container.cs" />
-    <Compile Include="Models\containerProcessor.cs" />
+    <Compile Include="Models\Container\container.cs" />
+    <Compile Include="Models\Container\containerProcessor.cs" />
     <Compile Include="Models\containerProvider.cs" />
-    <Compile Include="Models\containerStep.cs" />
-    <Compile Include="Models\containerStepDescriptions.cs" />
+    <Compile Include="Models\Container\containerStep.cs" />
+    <Compile Include="Models\Container\containerStepDescriptions.cs" />
+    <Compile Include="Models\Container\containerSummary.cs" />
+    <Compile Include="Models\test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Content Include="Content\CSS\container.css" />
+    <Content Include="Content\Images\buttons.png" />
+    <Content Include="Content\Images\header-fade.png" />
     <Content Include="Global.asax" />
     <Content Include="robots.txt" />
     <Content Include="Web.config" />
@@ -136,7 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Master.cshtml" />
@@ -146,6 +146,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\Items.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Code\Containers.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Code\Content.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

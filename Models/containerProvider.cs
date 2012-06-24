@@ -1,33 +1,27 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Container.Models.Container;
 
 namespace Container.Models
 {
     public class containerProvider
     {
-        public bool calculateContainer(ref containerProcessor cp)
+        public bool calculateContainer(containerProcessor cp)
         {
-            cp.containerSteps.Add(addStep(cp, containerStepDescriptions.INITIAL_STEP));
+            cp.containerSteps.Add(addStep(cp, containerStepDescriptions.INITIAL_STEP, containerStepType.error));
 
             //Step 1 - Decide which container to fill first
             bool fillFirstContainer = false;
 
-            if (cp.gallonsToFind > cp.container1.capacity && cp.gallonsToFind > cp.container2.capacity)
+            if (cp.container1.capacity <= cp.gallonsToFind) 
             {
-                if (cp.container1.capacity > cp.container2.capacity)
-                {
-                    fillFirstContainer = true;
-                }
+                fillFirstContainer = (cp.container1.capacity % cp.gallonsToFind == 0) ? true : false;
             }
             else
             {
-                //the first step should be to fill the container that is closer to the number of gallons to find
-                if (Math.Abs(cp.gallonsToFind - cp.container1.capacity) <= Math.Abs(cp.gallonsToFind - cp.container2.capacity))
-                {
-                    fillFirstContainer = true;
-                }
+                fillFirstContainer = (cp.gallonsToFind  % cp.container1.capacity == 0) ? true : false;
             }
 
             if (fillFirstContainer)
@@ -46,111 +40,169 @@ namespace Container.Models
             //Step 2 - loop through and continue to fill, dump, and transfer until the value is found 
             while (true)
             {
-                if (cp.container1.isFull())
-                {
-                    if (cp.container2.isEmpty())
-                    {
-                        cp.container1.transfer(ref cp.container2);
-                        cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_TRANSFER_TO_CONTAINER_2));
-                    }
-                    else
-                    {
-                        //if container 2 would become filled, then dump it, otherwise transfer it
-                        if (cp.container1.gallons + cp.container2.gallons >= cp.container2.capacity)
-                        {
-                            cp.container1.dump();
-                            cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_DUMP));
-                        }
-                        else
-                        {
-                            cp.container1.transfer(ref cp.container2);
-                            cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_TRANSFER_TO_CONTAINER_2));
-                        }
-                    }
-                }
-                else if (cp.container2.isFull())
-                {
-                    if (cp.container1.isEmpty())
-                    {
-                        cp.container2.transfer(ref cp.container1);
-                        cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_TRANSFER_TO_CONTAINER_1));
-                    }
-                    else
-                    {
-                        //if container 1 would become filled, then dump it, otherwise transfer it
-                        if (cp.container1.gallons + cp.container2.gallons >= cp.container1.capacity)
-                        {
-                            cp.container2.dump();
-                            cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_DUMP));
-                        }
-                        else
-                        {
-                            cp.container2.transfer(ref cp.container1);
-                            cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_TRANSFER_TO_CONTAINER_1));
-                        }
-                    }
-
-                }
-                else if (cp.container1.isEmpty())
+                bool stepDone = false;
+                //try to fill container 1
+                if (IsValidStep(cp.container1.capacity, cp.container2.gallons, cp))
                 {
                     cp.container1.fill();
                     cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_FILL));
-                }
-                else if (cp.container2.isEmpty())
-                {
-                    cp.container2.fill();
-                    cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_FILL));
+                    stepDone = true;
                 }
 
+                if (!stepDone)
+                {
+                    if (IsValidStep(cp.container1.gallons, cp.container2.capacity, cp))
+                    {                    
+                        cp.container2.fill();
+                        cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_FILL));
+                        stepDone = true;
+                    }
+                }
+
+                if (!stepDone)
+                {
+                    //try to dump container 1
+                    if (IsValidStep(0, cp.container2.capacity, cp))
+                    {
+                        cp.container1.dump();
+                        cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_DUMP));
+                        stepDone = true;
+                    }
+                }
+
+                if (!stepDone)
+                {
+                    //try to dump container 2
+                    if (IsValidStep(cp.container1.gallons, 0, cp))
+                    {
+                        cp.container2.dump();
+                        cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_DUMP));
+                        stepDone = true;
+                    }
+                }
+
+                int tempContainer1 = 0;
+                int tempContainer2 = 0;
+                if (!stepDone)
+                {
+                    //try to transfer container 1 to container 2
+                    if (cp.container2.gallons + cp.container1.gallons > cp.container2.capacity)
+                    {
+                        tempContainer1 = cp.container1.gallons - (cp.container2.capacity - cp.container2.gallons);
+                        tempContainer2 = cp.container2.capacity;
+                    }
+                    else
+                    {
+                        //otherwise pour all the contents into the new container, and the current container becomes empty
+                        tempContainer1 = 0;
+                        tempContainer2 = cp.container2.gallons + cp.container1.gallons;
+                    }
+
+                    if (IsValidStep(tempContainer1, tempContainer2, cp))
+                    {
+                        cp.container1.transfer(cp.container2);
+                        cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_TRANSFER_TO_CONTAINER_2));
+                        stepDone = true;
+                    }
+                }
+
+                if (!stepDone)
+                {
+                    //try to transfer container 2 to container 1
+                    if (cp.container1.gallons + cp.container2.gallons > cp.container1.capacity)
+                    {
+                        tempContainer2 = cp.container2.gallons - (cp.container1.capacity - cp.container1.gallons);
+                        tempContainer1 = cp.container1.capacity;
+                    }
+                    else
+                    {
+                        //otherwise pour all the contents into the new container, and the current container becomes empty
+                        tempContainer2 = 0;
+                        tempContainer1 = cp.container1.gallons + cp.container2.gallons;
+                    }
+
+                    if (IsValidStep(tempContainer1, tempContainer2, cp))
+                    {
+                        cp.container2.transfer(cp.container1);
+                        cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_TRANSFER_TO_CONTAINER_1));
+                        stepDone = true;
+                    }
+                }
+                               
                 //Step 3 - check if the value is found
-                if (cp.container1.gallons == cp.gallonsToFind)
+                if (cp.gallonsToFind <= cp.container1.capacity || cp.gallonsToFind <= cp.container2.capacity)
                 {
-                    cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_FOUND));
-                    return true;
+                    if (cp.container1.gallons == cp.gallonsToFind)
+                    {
+                        cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_FOUND, containerStepType.message));
+                        return true;
+                    }
+                    else if (cp.container2.gallons == cp.gallonsToFind)
+                    {
+                        cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_FOUND, containerStepType.message));
+                        return true;
+                    }
                 }
-                else if (cp.container2.gallons == cp.gallonsToFind)
+                else
                 {
-                    cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_2_FOUND));
-                    return true;
+                    if (cp.container1.gallons + cp.container2.gallons == cp.gallonsToFind)
+                    {
+                        cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_1_PLUS_2_FOUND, containerStepType.message));
+                        return true;
+                    }
                 }
-            }
+
+                if (cp.containerSteps.Count > (cp.container1.capacity * cp.container2.capacity) + 2)
+                {
+                    cp.containerSteps.Add(addStep(cp, containerStepDescriptions.CONTAINER_NOT_FOUND, containerStepType.message));
+                    return false;
+                }
+            }           
         }
 
-        public bool IsValid(ref containerProcessor cp)
+        private bool IsValidStep(int container1, int container2, containerProcessor cp)
+        {
+            return (!cp.containerSteps.Exists(m => m.container1Count == container1 & m.container2Count == container2));
+        }
+
+        public bool IsValid(containerProcessor cp)
         {
             bool isValid = true;
 
             //check that gallons to find is less than or equal to container 1 plus container 2's capacity
             if (cp.gallonsToFind > cp.container1.capacity + cp.container2.capacity)
             {
-                cp.containerSteps.Add(addStep(cp, containerStepDescriptions.ERROR_GALLONS_TO_FIND_MUST_BE_LESS_THAN_OR_EQUAL_TO_CONTAINER_1_PLUS_CONTAINER_2));
+                cp.containerSteps.Add(addStep(cp, containerStepDescriptions.ERROR_GALLONS_TO_FIND_MUST_BE_LESS_THAN_OR_EQUAL_TO_CONTAINER_1_PLUS_CONTAINER_2, containerStepType.error));
                 isValid = false;
             }
 
             if (cp.container1.capacity == cp.container2.capacity)
             {
-                cp.containerSteps.Add(addStep(cp, containerStepDescriptions.ERROR_CONTAINER_1_AND_CONTAINER_2_MUST_BE_DIFFERENT));
+                cp.containerSteps.Add(addStep(cp, containerStepDescriptions.ERROR_CONTAINER_1_AND_CONTAINER_2_MUST_BE_DIFFERENT, containerStepType.error));
                 isValid = false;
             }
 
             if (!Coprime(cp.container1.capacity, cp.container2.capacity))
             {
-                cp.containerSteps.Add(addStep(cp, containerStepDescriptions.ERROR_CONTAINER_1_AND_CONTAINER_2_SHARE_PRIMES));
+                cp.containerSteps.Add(addStep(cp, containerStepDescriptions.ERROR_CONTAINER_1_AND_CONTAINER_2_SHARE_PRIMES, containerStepType.error));
                 isValid = false;
             }
 
             return isValid;
         }
 
-        private containerStep addStep(containerProcessor cp, string message)
+        private containerStep addStep(containerProcessor cp, string message, containerStepType containerStepType = containerStepType.step)
         {
             return new containerStep
                         {
                             step = (cp.containerSteps == null || cp.containerSteps.Count == 0) ? 0 : cp.containerSteps.Max(m => m.step) + 1,
-                            stepDescription = String.Format("{0} <br /> Container 1 - {1} <br /> Container 2 - {2}", message, cp.container1.gallons.ToString(), cp.container2.gallons.ToString())
+                            stepDescription = message,
+                            container1Count = cp.container1.gallons,
+                            container2Count = cp.container2.gallons,
+                            containerStepType = containerStepType
                         };
         }
-
+        
         /// <summary>
         /// Get the Greatest Common Denominator of two numbers
         /// </summary>
