@@ -120,19 +120,36 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Content Include="bin\Container.dll" />
+    <Content Include="bin\Container.pdb" />
     <Content Include="Content\CSS\container.css" />
+    <Content Include="Content\Images\background-header.png" />
     <Content Include="Content\Images\buttons.png" />
     <Content Include="Content\Images\header-fade.png" />
     <Content Include="Global.asax" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Debug\ResolveAssemblyReference.cache" />
+    <None Include="obj\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Release\ResolveAssemblyReference.cache" />
     <None Include="Properties\PublishProfiles\diehardpuzzle - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\diehardpuzzle - Web Deploy.pubxml" />
     <None Include="README" />
+    <Content Include="obj\Debug\Container.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\Container.dll" />
+    <Content Include="obj\Debug\Container.pdb" />
+    <Content Include="obj\Release\Container.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Release\Container.dll" />
+    <Content Include="obj\Release\Container.pdb" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\jquery-1.6.2-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.6.2.js" />
     <Content Include="Scripts\jquery-1.6.2.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="ViewScripts\Container\ContainerProcessor.js" />
     <Content Include="Web.config" />
@@ -147,6 +164,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="obj\Debug\__testMsDeployConnection__\" />
+    <Folder Include="obj\Release\TempPE\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\_LayoutMain.cshtml" />
