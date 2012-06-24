@@ -82,12 +82,27 @@ namespace Container.ViewModels
                     }
                 }
 
-                if (cp.containerSteps.Count > (cp.container1.capacity * cp.container2.capacity) + 2)
+                if (cp.containerSteps.Count > (cp.container1.capacity * cp.container2.capacity) + 3)
                 {
                     cp.containerSteps.Add(AddStep(cp, containerStepDescriptions.CONTAINER_NOT_FOUND, containerStepType.message));
                     return false;
                 }
             }           
+        }
+
+        public bool summaryInformation(containerProcessor cp, bool result)
+        {
+            //set the success info
+            cp.containerSummary.success = result;
+
+            //set how many steps it took
+            cp.containerSummary.steps = cp.containerSteps.Count(m => m.containerStepType == containerStepType.step);
+
+            //set the last step information
+            containerStep lastStep = cp.containerSteps.Last();
+            cp.containerSummary.lastMessage = String.Format("{0} <br /> Container 1: {1:###,##0} <br /> Container 2: {2:###,##0}", lastStep.stepDescription, lastStep.container1Count, lastStep.container2Count);
+
+            return true;
         }
 
         /// <summary>
@@ -131,9 +146,9 @@ namespace Container.ViewModels
             bool isValid = true;
 
             //check that gallons to find is less than or equal to container 1 plus container 2's capacity
-            if (cp.gallonsToFind > cp.container1.capacity + cp.container2.capacity)
+            if (cp.gallonsToFind >= cp.container1.capacity + cp.container2.capacity)
             {
-                cp.containerSteps.Add(AddStep(cp, containerStepDescriptions.ERROR_GALLONS_TO_FIND_MUST_BE_LESS_THAN_OR_EQUAL_TO_CONTAINER_1_PLUS_CONTAINER_2, containerStepType.error));
+                cp.containerSteps.Add(AddStep(cp, containerStepDescriptions.ERROR_GALLONS_TO_FIND_MUST_BE_LESS_THAN_CONTAINER_1_PLUS_CONTAINER_2, containerStepType.error));
                 isValid = false;
             }
 

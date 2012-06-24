@@ -30,7 +30,7 @@
             <p><b>Rules</b></p>
             <ul>
                 <li>One container must be larger than the other container</li>
-                <li>The 'gallons to find' must be less than or equal to the sum of container 1 and container 2</li>
+                <li>The 'gallons to find' must be less than the sum of container 1 and container 2</li>
                 <li>Container 1 and 2 must be co-primes. (They must not share any prime numbers except for 1.</li>
             </ul>
         </div>
@@ -46,6 +46,10 @@
 
                 @Containers.ContainerItem(MvcHtmlString.Create("Steps"),
                                             MvcHtmlString.Create(@String.Format("{0:###,##0}", Model.containerSummary.steps)))
+
+                @Containers.ContainerItem(MvcHtmlString.Create("Final Result"),
+                                            MvcHtmlString.Create(Model.containerSummary.lastMessage))
+
             </div>
         </div>
         
@@ -56,13 +60,13 @@
                 {
                     if (containerStep.containerStepType == containerStepType.step)
                     {                                                                
-                            @Containers.ContainerItem(MvcHtmlString.Create(String.Format("Step {0}", @containerStep.step)),
-                                                        MvcHtmlString.Create(String.Format("{0} <br /> Container 1: {1} <br /> Container 2: {2}", @containerStep.stepDescription, @containerStep.container1Count, @containerStep.container2Count)))
+                            @Containers.ContainerItem(MvcHtmlString.Create(String.Format("Step {0:###,##0}", @containerStep.step)),
+                                                        MvcHtmlString.Create(String.Format("{0} <br /> Container 1: {1:###,##0} <br /> Container 2: {2:###,##0}", @containerStep.stepDescription, @containerStep.container1Count, @containerStep.container2Count)))
                     }
                     else
                     {
                             @Containers.ContainerItem(null,
-                                                        MvcHtmlString.Create(String.Format("<b>{0}</b> <br /> Container 1: {1} <br /> Container 2: {2}", @containerStep.stepDescription, @containerStep.container1Count, @containerStep.container2Count)))
+                                                        MvcHtmlString.Create(String.Format("<b>{0}</b> <br /> Container 1: {1:###,##0} <br /> Container 2: {2:###,##0}", @containerStep.stepDescription, @containerStep.container1Count, @containerStep.container2Count)))
                     }
                 }                    
             </div>

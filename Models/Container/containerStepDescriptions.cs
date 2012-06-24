@@ -8,7 +8,7 @@ namespace Container.Models.Container
     internal static class containerStepDescriptions
     {
         //Error or Warning Messages
-        internal const string ERROR_GALLONS_TO_FIND_MUST_BE_LESS_THAN_OR_EQUAL_TO_CONTAINER_1_PLUS_CONTAINER_2 = "Gallons to find must be less than or equal to first container plus second container";
+        internal const string ERROR_GALLONS_TO_FIND_MUST_BE_LESS_THAN_CONTAINER_1_PLUS_CONTAINER_2 = "Gallons to find must be less than first container plus second container";
         internal const string ERROR_CONTAINER_1_AND_CONTAINER_2_MUST_BE_DIFFERENT = "First container and second container must be different";
         internal const string ERROR_CONTAINER_1_AND_CONTAINER_2_SHARE_PRIMES = "First container and second container can not share prime numbers";
 

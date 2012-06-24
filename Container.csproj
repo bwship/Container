@@ -124,7 +124,9 @@
     <Content Include="Content\Images\buttons.png" />
     <Content Include="Content\Images\header-fade.png" />
     <Content Include="Global.asax" />
+    <None Include="Properties\PublishProfiles\diehardpuzzle - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\diehardpuzzle - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\diehardpuzzle - Web Deploy %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\diehardpuzzle - Web Deploy.pubxml" />
     <None Include="README" />
     <Content Include="robots.txt" />
