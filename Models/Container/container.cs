@@ -28,7 +28,7 @@ namespace Container.Models.Container
 
         //max number of gallons the container can hold
         [Display(Name = "Capacity")]
-        [Range(1, 10000, ErrorMessage = "Must be a number between 1 and 10,000")]
+        [Range(2, 10000, ErrorMessage = "Must be a number between 2 and 10,000")]
         public int capacity { get; set; }
 
         //number of gallons in the current container
@@ -80,6 +80,5 @@ namespace Container.Models.Container
         }
 
         #endregion
-
     }
 }
