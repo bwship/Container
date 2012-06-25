@@ -23,10 +23,16 @@ namespace Container.Controllers
 
         #endregion
 
+        #region Index
+
         public ActionResult Index()
         {
             return View();
         }
+
+        #endregion
+
+        #region Container Processor
 
         public ActionResult ContainerProcessor()
         {            
@@ -38,7 +44,7 @@ namespace Container.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_containerProvider.IsValid(containerProcessor))
+                if (_containerProvider.isValid(containerProcessor))
                 {
                     bool result = _containerProvider.calculateContainer(containerProcessor);
                     _containerProvider.summaryInformation(containerProcessor, result);
@@ -64,5 +70,7 @@ namespace Container.Controllers
 
             return View(containerProcessor);
         }
+
+        #endregion
     }
 }

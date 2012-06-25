@@ -14,6 +14,8 @@ namespace Container.ViewModels.Container
 
     public class containerStep
     {
+        #region Properties
+
         public int step { get; set; }
 
         public string stepDescription { get; set; }
@@ -23,5 +25,7 @@ namespace Container.ViewModels.Container
         public int container2Count { get; set; }
 
         public containerStepType containerStepType { get; set; }
+
+        #endregion
     }
 }
