@@ -41,9 +41,7 @@ namespace Container.Controllers
                 if (_containerProvider.IsValid(containerProcessor))
                 {
                     bool result = _containerProvider.calculateContainer(containerProcessor);
-
-                    containerProcessor.containerSummary.success = result;
-                    containerProcessor.containerSummary.steps = containerProcessor.containerSteps.Count(m => m.containerStepType == containerStepType.step);
+                    _containerProvider.summaryInformation(containerProcessor, result);
                 }
                 else
                 {                    
@@ -51,7 +49,7 @@ namespace Container.Controllers
                     {                                
                         switch (containerStep.stepDescription)
                         {
-                            case containerStepDescriptions.ERROR_GALLONS_TO_FIND_MUST_BE_LESS_THAN_OR_EQUAL_TO_CONTAINER_1_PLUS_CONTAINER_2:
+                            case containerStepDescriptions.ERROR_GALLONS_TO_FIND_MUST_BE_LESS_THAN_CONTAINER_1_PLUS_CONTAINER_2:
                                 this.ModelState.AddModelError("gallonsToFind", containerStep.stepDescription);
                                 break;
                             default:

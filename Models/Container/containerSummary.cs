@@ -10,5 +10,7 @@ namespace Container.Models.Container
         public bool success { get; set; }
 
         public int steps { get; set; }
+
+        public string lastMessage { get; set; }
     }
 }

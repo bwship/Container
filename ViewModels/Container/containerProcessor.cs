@@ -18,7 +18,8 @@ namespace Container.ViewModels.Container
 
         public container container2 { get; set; }
         
-        [Display(Name = "Gallons To Find")]        
+        [Display(Name = "Gallons To Find")]
+        [Range(1, 19999, ErrorMessage = "Must be a number between 1 and 19,999")]
         public int gallonsToFind { get; set; }
 
         public List<containerStep> containerSteps { get; set; }
