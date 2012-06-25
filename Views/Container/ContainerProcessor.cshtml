@@ -41,11 +41,9 @@
         <div class="content-results">
             @Containers.ContainerHeader(MvcHtmlString.Create("Result Summary"))
             <div class="container-body-many">
-                @Containers.ContainerItem(MvcHtmlString.Create("Status"),
-                                            MvcHtmlString.Create((Model.containerSummary.success ? "Success" : "Failed")))
-
-                @Containers.ContainerItem(MvcHtmlString.Create("Steps"),
-                                            MvcHtmlString.Create(@String.Format("{0:###,##0}", Model.containerSummary.steps)))
+                @Containers.ContainerItem(MvcHtmlString.Create("Status"), MvcHtmlString.Create((Model.containerSummary.success ? "Success" : "Failed")))
+                @Containers.ContainerItem(MvcHtmlString.Create("Steps"), MvcHtmlString.Create(@String.Format("{0:###,##0}", Model.containerSummary.steps)))
+                @Containers.ContainerItem(MvcHtmlString.Create("Final Result"), MvcHtmlString.Create(Model.containerSummary.lastMessage))
             </div>
         </div>
         
