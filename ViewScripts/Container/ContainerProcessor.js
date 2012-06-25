@@ -1,9 +1,9 @@
 ﻿$(document).ready(function () {
-    $("#btnSubmit").click(function () {
-        if (!$("form").valid()) {
-            return false;
-        }
-
-        
+    $(".input-text").keyup(function () {
+        $(".content-results").fadeTo("slow", 0.00, function () { //fade
+            $(this).slideUp("slow", function () { //slide up
+                $(this).remove(); //then remove from the DOM
+            });
+        });
     });
 });

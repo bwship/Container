@@ -12,9 +12,9 @@
         <div class="content-column-1"> 
             @using (Html.BeginForm())            
             {
-                @Items.Item(@Html.ValidationMessageFor(m => m.container1.capacity), @MvcHtmlString.Create("Container 1"), @Html.TextBoxFor(m => m.container1.capacity, new { @placeholder = "Enter a number greater than 0", @name = "container1Capacity" }))                
-                @Items.Item(@Html.ValidationMessageFor(m => m.container2.capacity), @MvcHtmlString.Create("Container 2"), @Html.TextBoxFor(m => m.container2.capacity, new { @placeholder = "Enter a number greater than 0", @name = "container2Capacity" }))
-                @Items.Item(@Html.ValidationMessageFor(m => m.gallonsToFind), @Html.LabelFor(m => m.gallonsToFind), @Html.TextBoxFor(m => m.gallonsToFind, new { @placeholder = "Enter a number greater than 0" }))                
+                @Items.Item(@Html.ValidationMessageFor(m => m.container1.capacity), @MvcHtmlString.Create("Container 1"), @Html.TextBoxFor(m => m.container1.capacity, new { @class="input-text", @placeholder = "Enter a number greater than 0", @name = "container1Capacity" }))                
+                @Items.Item(@Html.ValidationMessageFor(m => m.container2.capacity), @MvcHtmlString.Create("Container 2"), @Html.TextBoxFor(m => m.container2.capacity, new { @class="input-text", @placeholder = "Enter a number greater than 0", @name = "container2Capacity" }))
+                @Items.Item(@Html.ValidationMessageFor(m => m.gallonsToFind), @Html.LabelFor(m => m.gallonsToFind), @Html.TextBoxFor(m => m.gallonsToFind, new { @class="input-text", @placeholder = "Enter a number greater than 0" }))                
  
                 @Items.ItemSave("btnSubmit", "Submit", "button-120 button-120-grey") 
             }
